@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="TechVault - Tecnologia de Ponta, Precos Inteligentes. Smartphones, Notebooks, Audio Premium, Gaming e muito mais.">
+<title>TechVault | Tecnologia de Ponta, Precos Inteligentes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#08080c;--bg-card:#0e0e14;--bg-card-hover:#14141e;--bg-surface:#111118;
+--cyan:#00e5ff;--cyan-dim:#00b8cc;--violet:#7c3aed;--violet-dim:#6d28d9;
+--text:#e8eaed;--text-muted:#8b8fa3;--text-dim:#5a5e72;
+--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;
+--radius:12px;--radius-lg:20px;
+--font-heading:'Sora',system-ui,sans-serif;
+--font-body:'Plus Jakarta Sans',system-ui,sans-serif;
+--glow:0 0 20px rgba(0,229,255,.3),0 0 60px rgba(0,229,255,.1);
+--glow-sm:0 0 10px rgba(0,229,255,.2);
+--transition:all .3s cubic-bezier(.4,0,.2,1);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,h5,h6{font-family:var(--font-heading);font-weight:700;line-height:1.2}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:var(--font-body);border:none;background:none}
+img{max-width:100%;display:block}
+ul{list-style:none}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:#2a2a3a;border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:#3a3a4a}
+
+/* Container */
+.container{width:100%;max-width:1280px;margin:0 auto;padding:0 24px}
+@media(max-width:640px){.container{padding:0 16px}}
+
+/* Utility */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.section-title{font-size:clamp(1.75rem,4vw,2.75rem);text-align:center;margin-bottom:.5rem}
+.section-title span{color:var(--cyan)}
+.section-subtitle{text-align:center;color:var(--text-muted);font-size:1.05rem;margin-bottom:3rem;max-width:600px;margin-left:auto;margin-right:auto}
+
+/* Animate on scroll */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.reveal-delay-4{transition-delay:.4s}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:50px;font-weight:600;font-size:.95rem;transition:var(--transition);position:relative;overflow:hidden}
+.btn-primary{background:var(--cyan);color:var(--bg);box-shadow:var(--glow-sm)}
+.btn-primary:hover{box-shadow:var(--glow);transform:translateY(-2px)}
+.btn-primary:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.btn-outline{border:1.5px solid rgba(0,229,255,.4);color:var(--cyan);background:transparent}
+.btn-outline:hover{background:rgba(0,229,255,.08);border-color:var(--cyan);box-shadow:var(--glow-sm)}
+.btn-outline:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.btn-sm{padding:10px 20px;font-size:.85rem}
+.btn-violet{background:var(--violet);color:#fff}
+.btn-violet:hover{background:var(--violet-dim);box-shadow:0 0 20px rgba(124,58,237,.4)}
+
+/* ===== PARTICLES CANVAS ===== */
+#particles-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.4}
+
+/* ===== HEADER / NAV ===== */
+.header{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;transition:var(--transition)}
+.header.scrolled{background:rgba(8,8,12,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,255,.08);padding:10px 0}
+.header-inner{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--font-heading);font-size:1.5rem;font-weight:800;color:#fff}
+.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--cyan),var(--violet));border-radius:10px;display:flex;align-items:center;justify-content:center}
+.logo-icon i{width:22px;height:22px;color:var(--bg)}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:.9rem;font-weight:500;color:var(--text-muted);transition:var(--transition)}
+.nav-links a:hover{color:var(--cyan)}
+.nav-links a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
+.nav-actions{display:flex;align-items:center;gap:16px}
+.nav-actions button{color:var(--text-muted);transition:var(--transition);position:relative;background:none;border:none;padding:8px}
+.nav-actions button:hover{color:var(--cyan)}
+.nav-actions button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
+.cart-count{position:absolute;top:0;right:0;background:var(--cyan);color:var(--bg);font-size:.65rem;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.mobile-toggle{display:none;color:var(--text);padding:8px}
+.mobile-toggle:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
+@media(max-width:900px){
+.nav-links{display:none}
+.mobile-toggle{display:block}
+.nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(8,8,12,.97);backdrop-filter:blur(20px);padding:24px;gap:20px;border-bottom:1px solid rgba(0,229,255,.08)}
+}
+
+/* ===== HERO ===== */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;overflow:hidden;z-index:1}
+.hero-circuit{position:absolute;inset:0;z-index:0;opacity:.08}
+.hero-content{position:relative;z-index:2;max-width:680px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);border-radius:50px;font-size:.8rem;font-weight:600;color:var(--cyan);margin-bottom:24px}
+.hero-badge i{width:14px;height:14px}
+.hero h1{font-size:clamp(2.2rem,5.5vw,4rem);margin-bottom:20px;letter-spacing:-.02em}
+.hero h1 span{background:linear-gradient(135deg,var(--cyan),#00ffd5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:1.15rem;color:var(--text-muted);margin-bottom:36px;max-width:540px}
+.hero-buttons{display:flex;gap:16px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:48px;margin-top:56px}
+.hero-stat h3{font-size:1.75rem;color:var(--cyan)}
+.hero-stat p{font-size:.85rem;color:var(--text-muted)}
+.hero-visual{position:absolute;right:-5%;top:50%;transform:translateY(-50%);width:45%;z-index:1;opacity:.5}
+@media(max-width:900px){.hero-visual{display:none}.hero-stats{gap:24px;flex-wrap:wrap}}
+
+/* ===== CATEGORIES ===== */
+.categories{padding:100px 0;position:relative;z-index:1}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:20px}
+.cat-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.04);border-radius:var(--radius-lg);padding:32px 20px;text-align:center;transition:var(--transition);cursor:pointer}
+.cat-card:hover{border-color:rgba(0,229,255,.2);background:var(--bg-card-hover);transform:translateY(-4px);box-shadow:var(--glow-sm)}
+.cat-card:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.cat-icon{width:56px;height:56px;margin:0 auto 16px;background:rgba(0,229,255,.06);border-radius:14px;display:flex;align-items:center;justify-content:center}
+.cat-icon i{width:28px;height:28px;color:var(--cyan)}
+.cat-card h3{font-size:1rem;margin-bottom:4px}
+.cat-card p{font-size:.8rem;color:var(--text-muted)}
+
+/* ===== PRODUCTS ===== */
+.products{padding:100px 0;position:relative;z-index:1}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
+.product-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.04);border-radius:var(--radius-lg);overflow:hidden;transition:var(--transition);position:relative;perspective:1000px}
+.product-card:hover{border-color:rgba(0,229,255,.15);box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.product-img{height:220px;background:var(--bg-surface);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.product-img i{width:64px;height:64px;color:var(--text-dim);opacity:.5}
+.product-badge{position:absolute;top:12px;left:12px;padding:4px 10px;border-radius:6px;font-size:.7rem;font-weight:700;text-transform:uppercase}
+.badge-new{background:var(--cyan);color:var(--bg)}
+.badge-sale{background:var(--danger);color:#fff}
+.badge-hot{background:var(--warning);color:var(--bg)}
+.product-info{padding:20px}
+.product-brand{font-size:.75rem;color:var(--cyan);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.product-name{font-size:1rem;font-weight:600;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.product-specs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.spec-badge{padding:3px 8px;background:rgba(255,255,255,.04);border-radius:4px;font-size:.7rem;color:var(--text-muted)}
+.product-price{margin-bottom:4px}
+.price-original{font-size:.85rem;color:var(--text-dim);text-decoration:line-through;margin-right:8px}
+.price-current{font-size:1.35rem;font-weight:800;color:#fff}
+.price-installment{font-size:.78rem;color:var(--text-muted)}
+.price-installment strong{color:var(--success)}
+.product-actions{display:flex;gap:8px;margin-top:16px}
+.product-actions .btn{flex:1;justify-content:center;padding:10px 14px;font-size:.82rem}
+.btn-compare{background:rgba(124,58,237,.12);color:var(--violet);border:1px solid rgba(124,58,237,.2)}
+.btn-compare:hover{background:rgba(124,58,237,.2)}
+
+/* ===== DEAL OF THE DAY ===== */
+.deal{padding:100px 0;position:relative;z-index:1}
+.deal-container{background:var(--bg-card);border:1px solid rgba(0,229,255,.1);border-radius:var(--radius-lg);padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;position:relative;overflow:hidden}
+.deal-container::before{content:'';position:absolute;top:-50%;right:-20%;width:400px;height:400px;background:radial-gradient(circle,rgba(0,229,255,.06) 0%,transparent 70%);pointer-events:none}
+.deal-visual{display:flex;align-items:center;justify-content:center;background:var(--bg-surface);border-radius:var(--radius);min-height:300px}
+.deal-visual i{width:120px;height:120px;color:var(--text-dim);opacity:.3}
+.deal-content h4{font-size:.85rem;color:var(--cyan);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.deal-content h2{font-size:1.75rem;margin-bottom:16px}
+.deal-specs{margin-bottom:24px}
+.deal-specs li{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.9rem;color:var(--text-muted)}
+.deal-specs li i{width:18px;height:18px;color:var(--cyan);flex-shrink:0}
+.deal-pricing{margin-bottom:24px}
+.deal-original{font-size:1rem;color:var(--text-dim);text-decoration:line-through}
+.deal-current{font-size:2.5rem;font-weight:800;color:var(--cyan)}
+.deal-save{display:inline-block;padding:4px 12px;background:rgba(34,197,94,.1);color:var(--success);border-radius:6px;font-size:.8rem;font-weight:600;margin-left:12px}
+.countdown{display:flex;gap:12px;margin-bottom:28px}
+.countdown-item{background:var(--bg-surface);border-radius:var(--radius);padding:12px 16px;text-align:center;min-width:64px}
+.countdown-item .num{font-family:var(--font-heading);font-size:1.5rem;font-weight:800;color:var(--cyan);display:block}
+.countdown-item .label{font-size:.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
+@media(max-width:768px){
+.deal-container{grid-template-columns:1fr;padding:28px}
+.deal-visual{min-height:200px}
+}
+
+/* ===== BRANDS ===== */
+.brands{padding:80px 0;position:relative;z-index:1}
+.brands-grid{display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap}
+.brand-badge{padding:20px 36px;background:var(--bg-card);border:1px solid rgba(255,255,255,.04);border-radius:var(--radius);font-family:var(--font-heading);font-size:1.1rem;font-weight:700;color:var(--text-dim);transition:var(--transition);letter-spacing:.03em}
+.brand-badge:hover{color:var(--cyan);border-color:rgba(0,229,255,.2);box-shadow:var(--glow-sm)}
+
+/* ===== BLOG ===== */
+.blog{padding:100px 0;position:relative;z-index:1}
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px}
+.blog-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.04);border-radius:var(--radius-lg);overflow:hidden;transition:var(--transition)}
+.blog-card:hover{border-color:rgba(0,229,255,.15);transform:translateY(-4px)}
+.blog-card:focus-within{outline:2px solid var(--cyan);outline-offset:3px}
+.blog-thumb{height:200px;background:var(--bg-surface);display:flex;align-items:center;justify-content:center}
+.blog-thumb i{width:48px;height:48px;color:var(--text-dim);opacity:.3}
+.blog-body{padding:24px}
+.blog-tag{font-size:.7rem;font-weight:700;text-transform:uppercase;color:var(--violet);letter-spacing:.05em;margin-bottom:8px}
+.blog-body h3{font-size:1.1rem;margin-bottom:8px}
+.blog-body h3 a:hover{color:var(--cyan)}
+.blog-body h3 a:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;border-radius:3px}
+.blog-body p{font-size:.88rem;color:var(--text-muted);margin-bottom:16px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.blog-meta{display:flex;align-items:center;gap:16px;font-size:.78rem;color:var(--text-dim)}
+.blog-meta span{display:flex;align-items:center;gap:4px}
+.blog-meta i{width:14px;height:14px}
+
+/* ===== BUILD YOUR PC ===== */
+.builder{padding:100px 0;position:relative;z-index:1}
+.builder-container{background:var(--bg-card);border:1px solid rgba(0,229,255,.08);border-radius:var(--radius-lg);padding:48px;max-width:800px;margin:0 auto}
+.builder-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:640px){.builder-row{grid-template-columns:1fr}}
+.builder-field label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px;color:var(--text-muted)}
+.builder-field select{width:100%;padding:12px 16px;background:var(--bg-surface);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);color:var(--text);font-family:var(--font-body);font-size:.9rem;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%238b8fa3' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;cursor:pointer;transition:var(--transition)}
+.builder-field select:hover{border-color:rgba(0,229,255,.3)}
+.builder-field select:focus{outline:none;border-color:var(--cyan);box-shadow:var(--glow-sm)}
+.builder-total{display:flex;align-items:center;justify-content:space-between;padding:24px 0;margin-top:16px;border-top:1px solid rgba(255,255,255,.06)}
+.builder-total-label{font-size:1rem;color:var(--text-muted)}
+.builder-total-price{font-size:2rem;font-weight:800;color:var(--cyan)}
+.builder-total-installment{font-size:.85rem;color:var(--text-muted);text-align:right}
+
+/* ===== REVIEWS ===== */
+.reviews{padding:100px 0;position:relative;z-index:1}
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px}
+.review-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.04);border-radius:var(--radius-lg);padding:28px;transition:var(--transition)}
+.review-card:hover{border-color:rgba(0,229,255,.1)}
+.review-stars{display:flex;gap:2px;margin-bottom:12px}
+.review-stars i{width:18px;height:18px;color:var(--warning)}
+.review-text{font-size:.95rem;color:var(--text-muted);margin-bottom:20px;font-style:italic;line-height:1.7}
+.review-author{display:flex;align-items:center;gap:12px}
+.review-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--violet));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#fff}
+.review-info h4{font-size:.9rem;font-weight:600}
+.review-info p{font-size:.78rem;color:var(--text-muted)}
+.review-verified{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;color:var(--success);font-weight:600;margin-top:2px}
+.review-verified i{width:12px;height:12px}
+
+/* ===== NEWSLETTER ===== */
+.newsletter{padding:100px 0;position:relative;z-index:1}
+.newsletter-container{background:linear-gradient(135deg,rgba(0,229,255,.06),rgba(124,58,237,.06));border:1px solid rgba(0,229,255,.1);border-radius:var(--radius-lg);padding:64px 48px;text-align:center;max-width:700px;margin:0 auto}
+.newsletter-container h2{font-size:clamp(1.5rem,3vw,2rem);margin-bottom:12px}
+.newsletter-container p{color:var(--text-muted);margin-bottom:32px}
+.newsletter-form{display:flex;gap:12px;max-width:480px;margin:0 auto}
+.newsletter-form input{flex:1;padding:14px 20px;background:var(--bg);border:1px solid rgba(255,255,255,.1);border-radius:50px;color:var(--text);font-family:var(--font-body);font-size:.95rem}
+.newsletter-form input:focus{outline:none;border-color:var(--cyan);box-shadow:var(--glow-sm)}
+.newsletter-form input::placeholder{color:var(--text-dim)}
+@media(max-width:500px){.newsletter-form{flex-direction:column}.newsletter-form .btn{width:100%;justify-content:center}}
+
+/* ===== FOOTER ===== */
+.footer{padding:64px 0 24px;border-top:1px solid rgba(255,255,255,.04);position:relative;z-index:1}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:480px){.footer-grid{grid-template-columns:1fr}}
+.footer-brand p{color:var(--text-muted);font-size:.88rem;margin-top:16px;max-width:300px}
+.footer h4{font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:16px}
+.footer ul li{margin-bottom:10px}
+.footer ul li a{font-size:.88rem;color:var(--text-dim);transition:var(--transition)}
+.footer ul li a:hover{color:var(--cyan)}
+.footer ul li a:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;border-radius:3px}
+.footer-payment{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.footer-payment span{padding:6px 12px;background:var(--bg-card);border:1px solid rgba(255,255,255,.04);border-radius:6px;font-size:.75rem;color:var(--text-muted);font-weight:600}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid rgba(255,255,255,.04);font-size:.8rem;color:var(--text-dim);flex-wrap:wrap;gap:12px}
+.footer-certs{display:flex;gap:12px;align-items:center}
+.footer-certs span{display:flex;align-items:center;gap:4px;font-size:.75rem;color:var(--text-dim)}
+.footer-certs i{width:14px;height:14px;color:var(--success)}
+
+/* ===== COMPARISON MODAL ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.active{display:flex}
+.modal{background:var(--bg-card);border:1px solid rgba(0,229,255,.1);border-radius:var(--radius-lg);max-width:800px;width:100%;max-height:85vh;overflow-y:auto;padding:32px}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.modal-header h2{font-size:1.3rem}
+.modal-close{padding:8px;color:var(--text-muted);transition:var(--transition)}
+.modal-close:hover{color:var(--cyan)}
+.modal-close:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;border-radius:4px}
+.modal-close i{width:24px;height:24px}
+.compare-table{width:100%;border-collapse:collapse}
+.compare-table th,.compare-table td{padding:12px 16px;text-align:left;border-bottom:1px solid rgba(255,255,255,.04);font-size:.88rem}
+.compare-table th{color:var(--text-muted);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}
+.compare-table td:first-child{color:var(--text-muted);font-weight:500}
+.compare-empty{text-align:center;padding:48px;color:var(--text-dim)}
+
+/* ===== MINI CART ===== */
+.mini-cart{position:fixed;top:0;right:-400px;width:380px;max-width:100%;height:100vh;background:var(--bg-card);border-left:1px solid rgba(0,229,255,.08);z-index:2001;transition:right .3s ease;padding:24px;display:flex;flex-direction:column}
+.mini-cart.open{right:0}
+.cart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.04)}
+.cart-header h3{font-size:1.1rem}
+.cart-items{flex:1;overflow-y:auto}
+.cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.cart-item-img{width:56px;height:56px;background:var(--bg-surface);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cart-item-img i{width:24px;height:24px;color:var(--text-dim)}
+.cart-item-info{flex:1}
+.cart-item-info h4{font-size:.85rem;font-weight:600;margin-bottom:2px}
+.cart-item-info p{font-size:.8rem;color:var(--cyan);font-weight:700}
+.cart-item-remove{padding:4px;color:var(--text-dim);transition:var(--transition);background:none;border:none}
+.cart-item-remove:hover{color:var(--danger)}
+.cart-item-remove:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;border-radius:4px}
+.cart-item-remove i{width:16px;height:16px}
+.cart-footer{padding-top:16px;border-top:1px solid rgba(255,255,255,.04)}
+.cart-total{display:flex;justify-content:space-between;margin-bottom:16px;font-weight:700}
+.cart-total span:last-child{color:var(--cyan);font-size:1.2rem}
+.cart-empty{text-align:center;padding:48px 0;color:var(--text-dim);font-size:.9rem}
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none}
+.cart-overlay.open{display:block}
+</style>
+</head>
+<body>
+
+<canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+<!-- HEADER -->
+<header class="header" id="header" role="banner">
+<div class="container header-inner">
+<a href="#" class="logo" aria-label="TechVault - Pagina Inicial">
+<div class="logo-icon"><i data-lucide="cpu"></i></div>
+TechVault
+</a>
+<nav class="nav-links" id="navLinks" role="navigation" aria-label="Menu principal">
+<a href="#categories">Categorias</a>
+<a href="#products">Produtos</a>
+<a href="#deal">Ofertas</a>
+<a href="#builder">Monte seu PC</a>
+<a href="#blog">Blog</a>
+</nav>
+<div class="nav-actions">
+<button aria-label="Buscar produtos" id="searchBtn"><i data-lucide="search"></i></button>
+<button aria-label="Carrinho de compras" id="cartBtn"><i data-lucide="shopping-cart"></i><span class="cart-count" id="cartCount">0</span></button>
+<button class="mobile-toggle" id="mobileToggle" aria-label="Abrir menu" aria-expanded="false"><i data-lucide="menu"></i></button>
+</div>
+</div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+<svg class="hero-circuit" aria-hidden="true" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+<defs>
+<pattern id="circuit" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+<path d="M10 50h30M60 50h30M50 10v30M50 60v30" stroke="#00e5ff" stroke-width=".5" fill="none"/>
+<circle cx="50" cy="50" r="3" fill="#00e5ff"/>
+<circle cx="10" cy="50" r="1.5" fill="#00e5ff"/>
+<circle cx="90" cy="50" r="1.5" fill="#00e5ff"/>
+<circle cx="50" cy="10" r="1.5" fill="#00e5ff"/>
+<circle cx="50" cy="90" r="1.5" fill="#00e5ff"/>
+<rect x="42" y="20" width="16" height="10" rx="1" stroke="#00e5ff" stroke-width=".4" fill="none"/>
+<rect x="70" y="42" width="10" height="16" rx="1" stroke="#00e5ff" stroke-width=".4" fill="none"/>
+</pattern>
+</defs>
+<rect width="100%" height="100%" fill="url(#circuit)"/>
+</svg>
+<div class="container">
+<div class="hero-content reveal">
+<div class="hero-badge"><i data-lucide="zap"></i> Lancamentos 2026 disponiveis</div>
+<h1>Tecnologia de Ponta, <span>Precos Inteligentes</span></h1>
+<p>Descubra os melhores gadgets, componentes e dispositivos com os melhores precos do mercado. Entrega expressa para todo o Brasil.</p>
+<div class="hero-buttons">
+<a href="#products" class="btn btn-primary"><i data-lucide="shopping-bag"></i> Ver Produtos</a>
+<a href="#builder" class="btn btn-outline"><i data-lucide="wrench"></i> Monte seu PC</a>
+</div>
+<div class="hero-stats">
+<div class="hero-stat"><h3>50.000+</h3><p>Produtos</p></div>
+<div class="hero-stat"><h3>4.9/5</h3><p>Avaliacao</p></div>
+<div class="hero-stat"><h3>24h</h3><p>Entrega Express</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories" id="categories">
+<div class="container">
+<h2 class="section-title reveal">Explore por <span>Categoria</span></h2>
+<p class="section-subtitle reveal">Navegue pelo nosso catalogo completo de tecnologia de ponta</p>
+<div class="cat-grid">
+<div class="cat-card reveal reveal-delay-1" tabindex="0" role="button" aria-label="Smartphones">
+<div class="cat-icon"><i data-lucide="smartphone"></i></div>
+<h3>Smartphones</h3>
+<p>1.200+ modelos</p>
+</div>
+<div class="cat-card reveal reveal-delay-1" tabindex="0" role="button" aria-label="Notebooks">
+<div class="cat-icon"><i data-lucide="laptop"></i></div>
+<h3>Notebooks</h3>
+<p>800+ modelos</p>
+</div>
+<div class="cat-card reveal reveal-delay-2" tabindex="0" role="button" aria-label="Audio Premium">
+<div class="cat-icon"><i data-lucide="headphones"></i></div>
+<h3>Audio Premium</h3>
+<p>500+ modelos</p>
+</div>
+<div class="cat-card reveal reveal-delay-2" tabindex="0" role="button" aria-label="Gaming">
+<div class="cat-icon"><i data-lucide="gamepad-2"></i></div>
+<h3>Gaming</h3>
+<p>2.000+ itens</p>
+</div>
+<div class="cat-card reveal reveal-delay-3" tabindex="0" role="button" aria-label="Smart Home">
+<div class="cat-icon"><i data-lucide="home"></i></div>
+<h3>Smart Home</h3>
+<p>600+ dispositivos</p>
+</div>
+<div class="cat-card reveal reveal-delay-3" tabindex="0" role="button" aria-label="Wearables">
+<div class="cat-icon"><i data-lucide="watch"></i></div>
+<h3>Wearables</h3>
+<p>400+ modelos</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="products" id="products">
+<div class="container">
+<h2 class="section-title reveal">Produtos em <span>Destaque</span></h2>
+<p class="section-subtitle reveal">Selecionados pela nossa equipe de especialistas em tecnologia</p>
+<div class="products-grid" id="productsGrid"></div>
+</div>
+</section>
+
+<!-- DEAL OF THE DAY -->
+<section class="deal" id="deal">
+<div class="container">
+<h2 class="section-title reveal">Oferta do <span>Dia</span></h2>
+<p class="section-subtitle reveal">Corra antes que acabe! Estoque limitado.</p>
+<div class="deal-container reveal">
+<div class="deal-visual"><i data-lucide="monitor"></i></div>
+<div class="deal-content">
+<h4>Oferta Relampago</h4>
+<h2>MacBook Pro M4 Max 36GB</h2>
+<ul class="deal-specs">
+<li><i data-lucide="cpu"></i> Chip Apple M4 Max - 14 nucleos</li>
+<li><i data-lucide="memory-stick"></i> 36GB Memoria Unificada</li>
+<li><i data-lucide="hard-drive"></i> SSD 1TB NVMe</li>
+<li><i data-lucide="monitor"></i> Tela Liquid Retina XDR 16"</li>
+<li><i data-lucide="battery-full"></i> Ate 22h de bateria</li>
+</ul>
+<div class="deal-pricing">
+<div class="deal-original">De R$ 32.999,00</div>
+<span class="deal-current">R$ 26.499,00</span>
+<span class="deal-save">-20% OFF</span>
+</div>
+<div class="countdown" id="countdown">
+<div class="countdown-item"><span class="num" id="cdHours">00</span><span class="label">Horas</span></div>
+<div class="countdown-item"><span class="num" id="cdMins">00</span><span class="label">Min</span></div>
+<div class="countdown-item"><span class="num" id="cdSecs">00</span><span class="label">Seg</span></div>
+</div>
+<button class="btn btn-primary" onclick="addToCart({id:'deal-1',name:'MacBook Pro M4 Max 36GB',price:26499,icon:'monitor'})">
+<i data-lucide="shopping-cart"></i> Comprar Agora
+</button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- BRANDS -->
+<section class="brands" id="brands">
+<div class="container">
+<h2 class="section-title reveal">Marcas <span>Parceiras</span></h2>
+<p class="section-subtitle reveal">Trabalhamos com as maiores marcas de tecnologia do mundo</p>
+<div class="brands-grid reveal">
+<div class="brand-badge">Apple</div>
+<div class="brand-badge">Samsung</div>
+<div class="brand-badge">Sony</div>
+<div class="brand-badge">NVIDIA</div>
+<div class="brand-badge">Bose</div>
+<div class="brand-badge">DJI</div>
+</div>
+</div>
+</section>
+
+<!-- BLOG -->
+<section class="blog" id="blog">
+<div class="container">
+<h2 class="section-title reveal">TechVault <span>Blog</span></h2>
+<p class="section-subtitle reveal">Fique por dentro das novidades do mundo tech</p>
+<div class="blog-grid">
+<article class="blog-card reveal reveal-delay-1">
+<div class="blog-thumb"><i data-lucide="brain"></i></div>
+<div class="blog-body">
+<div class="blog-tag">Inteligencia Artificial</div>
+<h3><a href="#">IA em 2026: Como a Inteligencia Artificial Transformou o Mercado de Gadgets</a></h3>
+<p>Descubra como os novos chips de IA integrados estao revolucionando smartphones, notebooks e dispositivos vestlveis neste ano.</p>
+<div class="blog-meta">
+<span><i data-lucide="calendar"></i> 12 Mar 2026</span>
+<span><i data-lucide="clock"></i> 8 min leitura</span>
+</div>
+</div>
+</article>
+<article class="blog-card reveal reveal-delay-2">
+<div class="blog-thumb"><i data-lucide="smartphone"></i></div>
+<div class="blog-body">
+<div class="blog-tag">Review</div>
+<h3><a href="#">Galaxy S26 Ultra vs iPhone 17 Pro Max: Comparativo Definitivo</a></h3>
+<p>Analisamos camera, performance, bateria e experiencia de uso dos dois flagships mais esperados do ano em detalhe.</p>
+<div class="blog-meta">
+<span><i data-lucide="calendar"></i> 10 Mar 2026</span>
+<span><i data-lucide="clock"></i> 12 min leitura</span>
+</div>
+</div>
+</article>
+<article class="blog-card reveal reveal-delay-3">
+<div class="blog-thumb"><i data-lucide="book-open"></i></div>
+<div class="blog-body">
+<div class="blog-tag">Guia de Compra</div>
+<h3><a href="#">Guia Completo: Como Escolher o Notebook Ideal para Cada Necessidade</a></h3>
+<p>Trabalho, estudo, gaming ou criacao de conteudo? Montamos um guia pratico para voce nao errar na escolha do seu proximo notebook.</p>
+<div class="blog-meta">
+<span><i data-lucide="calendar"></i> 08 Mar 2026</span>
+<span><i data-lucide="clock"></i> 10 min leitura</span>
+</div>
+</div>
+</article>
+</div>
+</div>
+</section>
+
+<!-- BUILD YOUR PC -->
+<section class="builder" id="builder">
+<div class="container">
+<h2 class="section-title reveal">Monte seu <span>PC</span></h2>
+<p class="section-subtitle reveal">Selecione os componentes e veja o preco atualizado em tempo real</p>
+<div class="builder-container reveal">
+<div class="builder-row">
+<div class="builder-field">
+<label for="builderCpu">Processador</label>
+<select id="builderCpu" aria-label="Selecione o processador">
+<option value="0">Selecione...</option>
+<option value="2499">Intel Core i5-14600K - R$ 2.499</option>
+<option value="3299">Intel Core i7-14700K - R$ 3.299</option>
+<option value="4899">Intel Core i9-14900K - R$ 4.899</option>
+<option value="1999">AMD Ryzen 5 7600X - R$ 1.999</option>
+<option value="2899">AMD Ryzen 7 7800X3D - R$ 2.899</option>
+<option value="4499">AMD Ryzen 9 7950X - R$ 4.499</option>
+</select>
+</div>
+<div class="builder-field">
+<label for="builderRam">Memoria RAM</label>
+<select id="builderRam" aria-label="Selecione a memoria RAM">
+<option value="0">Selecione...</option>
+<option value="299">16GB DDR5 5200MHz - R$ 299</option>
+<option value="549">32GB DDR5 5600MHz - R$ 549</option>
+<option value="999">64GB DDR5 6000MHz - R$ 999</option>
+<option value="1899">128GB DDR5 6400MHz - R$ 1.899</option>
+</select>
+</div>
+</div>
+<div class="builder-row">
+<div class="builder-field">
+<label for="builderGpu">Placa de Video</label>
+<select id="builderGpu" aria-label="Selecione a placa de video">
+<option value="0">Selecione...</option>
+<option value="2999">RTX 4060 Ti 8GB - R$ 2.999</option>
+<option value="4499">RTX 4070 Ti Super 16GB - R$ 4.499</option>
+<option value="6999">RTX 4080 Super 16GB - R$ 6.999</option>
+<option value="12999">RTX 4090 24GB - R$ 12.999</option>
+<option value="3499">RX 7800 XT 16GB - R$ 3.499</option>
+<option value="5999">RX 7900 XTX 24GB - R$ 5.999</option>
+</select>
+</div>
+<div class="builder-field">
+<label for="builderStorage">Armazenamento</label>
+<select id="builderStorage" aria-label="Selecione o armazenamento">
+<option value="0">Selecione...</option>
+<option value="399">SSD NVMe 500GB - R$ 399</option>
+<option value="599">SSD NVMe 1TB - R$ 599</option>
+<option value="999">SSD NVMe 2TB - R$ 999</option>
+<option value="1799">SSD NVMe 4TB - R$ 1.799</option>
+</select>
+</div>
+</div>
+<div class="builder-total">
+<div>
+<div class="builder-total-label">Total estimado</div>
+</div>
+<div style="text-align:right">
+<div class="builder-total-price" id="builderPrice">R$ 0,00</div>
+<div class="builder-total-installment" id="builderInstallment">ou 12x de R$ 0,00</div>
+</div>
+</div>
+<div style="text-align:center;margin-top:24px">
+<button class="btn btn-primary" id="builderAddCart"><i data-lucide="shopping-cart"></i> Adicionar ao Carrinho</button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+<div class="container">
+<h2 class="section-title reveal">O que nossos <span>clientes</span> dizem</h2>
+<p class="section-subtitle reveal">Avaliacoes reais de compradores verificados</p>
+<div class="reviews-grid">
+<div class="review-card reveal reveal-delay-1">
+<div class="review-stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
+<p class="review-text">"Comprei meu notebook gamer na TechVault e a experiencia foi impecavel. Entrega em 24h e preco melhor que todas as outras lojas. Super recomendo!"</p>
+<div class="review-author">
+<div class="review-avatar">RM</div>
+<div class="review-info">
+<h4>Rafael Mendes</h4>
+<p>Sao Paulo, SP</p>
+<div class="review-verified"><i data-lucide="badge-check"></i> Compra verificada</div>
+</div>
+</div>
+</div>
+<div class="review-card reveal reveal-delay-2">
+<div class="review-stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
+<p class="review-text">"A secao de Monte seu PC e fantastica! Consegui configurar exatamente o que precisava e o preco ficou muito justo. Atendimento de primeira."</p>
+<div class="review-author">
+<div class="review-avatar">CS</div>
+<div class="review-info">
+<h4>Camila Santos</h4>
+<p>Curitiba, PR</p>
+<div class="review-verified"><i data-lucide="badge-check"></i> Compra verificada</div>
+</div>
+</div>
+</div>
+<div class="review-card reveal reveal-delay-3">
+<div class="review-stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
+<p class="review-text">"Melhor loja de tecnologia do Brasil. Comprei fones Bose e um Apple Watch, ambos chegaram rapido e com nota fiscal. Precos imbativeis."</p>
+<div class="review-author">
+<div class="review-avatar">LF</div>
+<div class="review-info">
+<h4>Lucas Ferreira</h4>
+<p>Rio de Janeiro, RJ</p>
+<div class="review-verified"><i data-lucide="badge-check"></i> Compra verificada</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter" id="newsletter">
+<div class="container">
+<div class="newsletter-container reveal">
+<h2>Receba <span style="color:var(--cyan)">ofertas exclusivas</span></h2>
+<p>Cadastre-se e receba em primeira mao as melhores promocoes e lancamentos tech.</p>
+<form class="newsletter-form" onsubmit="event.preventDefault();this.querySelector('input').value='';alert('Cadastro realizado com sucesso!')">
+<label for="newsletterEmail" class="sr-only">Seu melhor e-mail</label>
+<input type="email" id="newsletterEmail" placeholder="Seu melhor e-mail" required aria-label="Seu melhor e-mail">
+<button type="submit" class="btn btn-primary">Cadastrar</button>
+</form>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" id="footer" role="contentinfo">
+<div class="container">
+<div class="footer-grid">
+<div class="footer-brand">
+<a href="#" class="logo" aria-label="TechVault">
+<div class="logo-icon"><i data-lucide="cpu"></i></div>
+TechVault
+</a>
+<p>Sua loja de tecnologia premium com os melhores precos do Brasil. Entrega expressa e garantia estendida em todos os produtos.</p>
+</div>
+<div>
+<h4>Categorias</h4>
+<ul>
+<li><a href="#">Smartphones</a></li>
+<li><a href="#">Notebooks</a></li>
+<li><a href="#">Audio Premium</a></li>
+<li><a href="#">Gaming</a></li>
+<li><a href="#">Smart Home</a></li>
+<li><a href="#">Wearables</a></li>
+</ul>
+</div>
+<div>
+<h4>Institucional</h4>
+<ul>
+<li><a href="#">Sobre Nos</a></li>
+<li><a href="#">Trabalhe Conosco</a></li>
+<li><a href="#">Politica de Privacidade</a></li>
+<li><a href="#">Termos de Uso</a></li>
+<li><a href="#">Trocas e Devolucoes</a></li>
+<li><a href="#">Fale Conosco</a></li>
+</ul>
+</div>
+<div>
+<h4>Pagamento</h4>
+<div class="footer-payment">
+<span>Visa</span>
+<span>Mastercard</span>
+<span>Elo</span>
+<span>Amex</span>
+<span>PIX</span>
+<span>Boleto</span>
+</div>
+<h4 style="margin-top:24px">Atendimento</h4>
+<ul>
+<li><a href="#">(11) 4000-8000</a></li>
+<li><a href="#">contato@techvault.com.br</a></li>
+<li><a href="#">Seg-Sex: 8h - 22h</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>&copy; 2026 TechVault. Todos os direitos reservados. CNPJ: 00.000.000/0001-00</p>
+<div class="footer-certs">
+<span><i data-lucide="shield-check"></i> SSL Seguro</span>
+<span><i data-lucide="award"></i> Google Safe</span>
+<span><i data-lucide="lock"></i> PCI-DSS</span>
+</div>
+</div>
+</div>
+</footer>
+
+<!-- COMPARISON MODAL -->
+<div class="modal-overlay" id="compareModal" role="dialog" aria-modal="true" aria-labelledby="compareTitle">
+<div class="modal">
+<div class="modal-header">
+<h2 id="compareTitle">Comparar Produtos</h2>
+<button class="modal-close" onclick="closeCompare()" aria-label="Fechar comparacao"><i data-lucide="x"></i></button>
+</div>
+<div id="compareContent">
+<p class="compare-empty">Selecione pelo menos 2 produtos para comparar.</p>
+</div>
+</div>
+</div>
+
+<!-- MINI CART -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="mini-cart" id="miniCart" role="complementary" aria-label="Carrinho de compras">
+<div class="cart-header">
+<h3>Carrinho</h3>
+<button onclick="closeCart()" aria-label="Fechar carrinho"><i data-lucide="x"></i></button>
+</div>
+<div class="cart-items" id="cartItems">
+<p class="cart-empty">Seu carrinho esta vazio.</p>
+</div>
+<div class="cart-footer">
+<div class="cart-total"><span>Total:</span><span id="cartTotal">R$ 0,00</span></div>
+<button class="btn btn-primary" style="width:100%;justify-content:center" onclick="alert('Redirecionando para o checkout...')">Finalizar Compra</button>
+</div>
+</aside>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>
+/* ===== INIT LUCIDE ===== */
+document.addEventListener('DOMContentLoaded', function() {
+lucide.createIcons();
+initParticles();
+initIntersectionObserver();
+initCountdown();
+initBuilder();
+renderProducts();
+loadCart();
+initTiltEffect();
+});
+
+/* ===== PRODUCTS DATA ===== */
+const productsData = [
+{id:'p1',name:'iPhone 16 Pro Max 256GB',brand:'Apple',price:9499,originalPrice:10999,icon:'smartphone',badge:'hot',badgeText:'Popular',specs:['A18 Pro','6.9"','48MP','Titanio'],installment:12},
+{id:'p2',name:'Galaxy S26 Ultra 512GB',brand:'Samsung',price:8999,originalPrice:null,icon:'smartphone',badge:'new',badgeText:'Novo',specs:['Snapdragon 8 Gen 4','6.8"','200MP','S Pen'],installment:12},
+{id:'p3',name:'Dell XPS 16 i7 32GB RTX 4060',brand:'Dell',price:12999,originalPrice:14999,icon:'laptop',badge:'sale',badgeText:'-13%',specs:['i7-14700H','32GB','RTX 4060','OLED'],installment:12},
+{id:'p4',name:'Sony WH-1000XM6',brand:'Sony',price:2299,originalPrice:2799,icon:'headphones',badge:'hot',badgeText:'Popular',specs:['ANC','LDAC','40h Bateria','Hi-Res'],installment:12},
+{id:'p5',name:'ROG Strix SCAR 18 RTX 4090',brand:'ASUS',price:24999,originalPrice:null,icon:'laptop',badge:'new',badgeText:'Novo',specs:['i9-14900HX','64GB','RTX 4090','240Hz'],installment:12},
+{id:'p6',name:'Apple Watch Ultra 3',brand:'Apple',price:6499,originalPrice:7299,icon:'watch',badge:'sale',badgeText:'-11%',specs:['GPS+Cell','Titanio','72h','mergulho'],installment:12},
+{id:'p7',name:'DJI Air 4 Fly More Combo',brand:'DJI',price:8999,originalPrice:null,icon:'camera',badge:'new',badgeText:'Novo',specs:['8K','Omnidirecional','46min','ActiveTrack 7'],installment:12},
+{id:'p8',name:'Bose QuietComfort Ultra Earbuds',brand:'Bose',price:2199,originalPrice:2699,icon:'headphones',badge:'sale',badgeText:'-19%',specs:['ANC','Spatial','6h+18h','IPX4'],installment:12}
+];
+
+/* ===== RENDER PRODUCTS ===== */
+function renderProducts(){
+const grid=document.getElementById('productsGrid');
+grid.innerHTML=productsData.map((p,i)=>{
+const installmentVal=(p.price/p.installment).toFixed(2).replace('.',',');
+const badgeClass=p.badge==='new'?'badge-new':p.badge==='sale'?'badge-sale':'badge-hot';
+return`
+<div class="product-card reveal reveal-delay-${(i%4)+1}" data-product-id="${p.id}">
+<div class="product-img">
+<i data-lucide="${p.icon}"></i>
+<span class="product-badge ${badgeClass}">${p.badgeText}</span>
+</div>
+<div class="product-info">
+<div class="product-brand">${p.brand}</div>
+<div class="product-name">${p.name}</div>
+<div class="product-specs">${p.specs.map(s=>`<span class="spec-badge">${s}</span>`).join('')}</div>
+<div class="product-price">
+${p.originalPrice?`<span class="price-original">R$ ${p.originalPrice.toLocaleString('pt-BR')},00</span>`:''}
+<span class="price-current">R$ ${p.price.toLocaleString('pt-BR')},00</span>
+</div>
+<div class="price-installment">ou <strong>12x de R$ ${installmentVal}</strong> sem juros</div>
+<div class="product-actions">
+<button class="btn btn-sm btn-primary" onclick="addToCart({id:'${p.id}',name:'${p.name.replace(/'/g,"\\'")}',price:${p.price},icon:'${p.icon}'})"><i data-lucide="shopping-cart"></i> Comprar</button>
+<button class="btn btn-sm btn-compare" onclick="toggleCompare('${p.id}')" data-compare="${p.id}"><i data-lucide="columns-2"></i> Comparar</button>
+</div>
+</div>
+</div>`;
+}).join('');
+lucide.createIcons();
+initIntersectionObserver();
+}
+
+/* ===== CART (localStorage) ===== */
+let cart=[];
+function loadCart(){
+try{cart=JSON.parse(localStorage.getItem('tv_cart'))||[];}catch(e){cart=[];}
+updateCartUI();
+}
+function saveCart(){localStorage.setItem('tv_cart',JSON.stringify(cart));updateCartUI();}
+function addToCart(item){
+const existing=cart.find(c=>c.id===item.id);
+if(existing){existing.qty++;}else{cart.push({...item,qty:1});}
+saveCart();openCart();
+}
+function removeFromCart(id){
+cart=cart.filter(c=>c.id!==id);saveCart();
+}
+function updateCartUI(){
+const countEl=document.getElementById('cartCount');
+const itemsEl=document.getElementById('cartItems');
+const totalEl=document.getElementById('cartTotal');
+const total=cart.reduce((s,c)=>s+c.price*c.qty,0);
+countEl.textContent=cart.reduce((s,c)=>s+c.qty,0);
+if(cart.length===0){
+itemsEl.innerHTML='<p class="cart-empty">Seu carrinho esta vazio.</p>';
+}else{
+itemsEl.innerHTML=cart.map(c=>`
+<div class="cart-item">
+<div class="cart-item-img"><i data-lucide="${c.icon||'box'}"></i></div>
+<div class="cart-item-info">
+<h4>${c.name}</h4>
+<p>R$ ${c.price.toLocaleString('pt-BR')},00 x${c.qty}</p>
+</div>
+<button class="cart-item-remove" onclick="removeFromCart('${c.id}')" aria-label="Remover ${c.name}"><i data-lucide="trash-2"></i></button>
+</div>`).join('');
+}
+totalEl.textContent=`R$ ${total.toLocaleString('pt-BR')},00`;
+lucide.createIcons();
+}
+function openCart(){document.getElementById('miniCart').classList.add('open');document.getElementById('cartOverlay').classList.add('open');}
+function closeCart(){document.getElementById('miniCart').classList.remove('open');document.getElementById('cartOverlay').classList.remove('open');}
+document.getElementById('cartBtn').addEventListener('click',openCart);
+document.getElementById('cartOverlay').addEventListener('click',closeCart);
+
+/* ===== COMPARISON ===== */
+let compareList=[];
+function toggleCompare(id){
+const idx=compareList.indexOf(id);
+if(idx>-1){compareList.splice(idx,1);}
+else{if(compareList.length>=3){alert('Maximo de 3 produtos para comparacao.');return;}compareList.push(id);}
+document.querySelectorAll('[data-compare]').forEach(btn=>{
+btn.style.background=compareList.includes(btn.dataset.compare)?'rgba(124,58,237,.3)':'';
+});
+if(compareList.length>=2)openCompare();
+}
+function openCompare(){
+const modal=document.getElementById('compareModal');
+const content=document.getElementById('compareContent');
+const items=compareList.map(id=>productsData.find(p=>p.id===id)).filter(Boolean);
+if(items.length<2){content.innerHTML='<p class="compare-empty">Selecione pelo menos 2 produtos para comparar.</p>';modal.classList.add('active');return;}
+const specLabels=['Marca','Preco','Specs'];
+let html='<table class="compare-table"><thead><tr><th>Especificacao</th>';
+items.forEach(p=>{html+=`<th>${p.name}</th>`;});
+html+='</tr></thead><tbody>';
+html+=`<tr><td>Marca</td>${items.map(p=>`<td>${p.brand}</td>`).join('')}</tr>`;
+html+=`<tr><td>Preco</td>${items.map(p=>`<td style="color:var(--cyan);font-weight:700">R$ ${p.price.toLocaleString('pt-BR')},00</td>`).join('')}</tr>`;
+html+=`<tr><td>Parcelas</td>${items.map(p=>`<td>12x R$ ${(p.price/12).toFixed(2).replace('.',',')}</td>`).join('')}</tr>`;
+const maxSpecs=Math.max(...items.map(p=>p.specs.length));
+for(let i=0;i<maxSpecs;i++){
+html+=`<tr><td>Spec ${i+1}</td>${items.map(p=>`<td>${p.specs[i]||'-'}</td>`).join('')}</tr>`;
+}
+html+='</tbody></table>';
+content.innerHTML=html;
+modal.classList.add('active');
+}
+function closeCompare(){document.getElementById('compareModal').classList.remove('active');}
+document.getElementById('compareModal').addEventListener('click',function(e){if(e.target===this)closeCompare();});
+
+/* ===== COUNTDOWN ===== */
+function initCountdown(){
+const endTime=new Date();
+endTime.setHours(23,59,59,999);
+function update(){
+const now=new Date();
+let diff=endTime-now;
+if(diff<0){endTime.setDate(endTime.getDate()+1);diff=endTime-now;}
+const h=Math.floor(diff/3600000);
+const m=Math.floor((diff%3600000)/60000);
+const s=Math.floor((diff%60000)/1000);
+document.getElementById('cdHours').textContent=String(h).padStart(2,'0');
+document.getElementById('cdMins').textContent=String(m).padStart(2,'0');
+document.getElementById('cdSecs').textContent=String(s).padStart(2,'0');
+}
+update();setInterval(update,1000);
+}
+
+/* ===== BUILDER ===== */
+function initBuilder(){
+const selects=document.querySelectorAll('#builderCpu,#builderRam,#builderGpu,#builderStorage');
+selects.forEach(s=>s.addEventListener('change',updateBuilder));
+document.getElementById('builderAddCart').addEventListener('click',function(){
+const total=calcBuilderTotal();
+if(total===0){alert('Selecione pelo menos um componente.');return;}
+addToCart({id:'custom-pc-'+Date.now(),name:'PC Personalizado',price:total,icon:'monitor'});
+});
+}
+function calcBuilderTotal(){
+return['builderCpu','builderRam','builderGpu','builderStorage'].reduce((s,id)=>s+Number(document.getElementById(id).value),0);
+}
+function updateBuilder(){
+const total=calcBuilderTotal();
+document.getElementById('builderPrice').textContent=`R$ ${total.toLocaleString('pt-BR')},00`;
+const installment=(total/12).toFixed(2).replace('.',',');
+document.getElementById('builderInstallment').textContent=`ou 12x de R$ ${installment}`;
+}
+
+/* ===== PARTICLES ===== */
+function initParticles(){
+const canvas=document.getElementById('particles-canvas');
+const ctx=canvas.getContext('2d');
+let w,h,particles=[];
+function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;}
+resize();window.addEventListener('resize',resize);
+const count=Math.min(60,Math.floor(window.innerWidth/25));
+for(let i=0;i<count;i++){
+particles.push({
+x:Math.random()*w,y:Math.random()*h,
+vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,
+r:Math.random()*1.5+.5,
+a:Math.random()*.4+.1
+});
+}
+function draw(){
+ctx.clearRect(0,0,w,h);
+particles.forEach(p=>{
+p.x+=p.vx;p.y+=p.vy;
+if(p.x<0)p.x=w;if(p.x>w)p.x=0;
+if(p.y<0)p.y=h;if(p.y>h)p.y=0;
+ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fillStyle=`rgba(0,229,255,${p.a})`;ctx.fill();
+});
+for(let i=0;i<particles.length;i++){
+for(let j=i+1;j<particles.length;j++){
+const dx=particles[i].x-particles[j].x;
+const dy=particles[i].y-particles[j].y;
+const dist=Math.sqrt(dx*dx+dy*dy);
+if(dist<120){
+ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);
+ctx.lineTo(particles[j].x,particles[j].y);
+ctx.strokeStyle=`rgba(0,229,255,${.06*(1-dist/120)})`;
+ctx.lineWidth=.5;ctx.stroke();
+}
+}
+}
+requestAnimationFrame(draw);
+}
+draw();
+}
+
+/* ===== INTERSECTION OBSERVER ===== */
+function initIntersectionObserver(){
+const observer=new IntersectionObserver((entries)=>{
+entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal:not(.visible)').forEach(el=>observer.observe(el));
+}
+
+/* ===== 3D TILT EFFECT ===== */
+function initTiltEffect(){
+document.addEventListener('mousemove',function(e){
+document.querySelectorAll('.product-card').forEach(card=>{
+const rect=card.getBoundingClientRect();
+const inCard=e.clientX>=rect.left&&e.clientX<=rect.right&&e.clientY>=rect.top&&e.clientY<=rect.bottom;
+if(inCard){
+const x=(e.clientX-rect.left)/rect.width-.5;
+const y=(e.clientY-rect.top)/rect.height-.5;
+card.style.transform=`perspective(600px) rotateY(${x*6}deg) rotateX(${-y*6}deg) scale(1.02)`;
+}else{
+card.style.transform='';
+}
+});
+});
+}
+
+/* ===== HEADER SCROLL ===== */
+window.addEventListener('scroll',function(){
+document.getElementById('header').classList.toggle('scrolled',window.scrollY>50);
+});
+
+/* ===== MOBILE MENU ===== */
+document.getElementById('mobileToggle').addEventListener('click',function(){
+const nav=document.getElementById('navLinks');
+const open=nav.classList.toggle('open');
+this.setAttribute('aria-expanded',open);
+});
+
+/* ===== KEYBOARD: close modals on Escape ===== */
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape'){closeCompare();closeCart();}
+});
+</script>
+</body>
+</html>
