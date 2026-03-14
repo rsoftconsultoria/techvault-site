@@ -95,6 +95,9 @@ ul{list-style:none}
 
 /* ===== HERO ===== */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;overflow:hidden;z-index:1}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(8,8,12,.92) 0%,rgba(8,8,12,.75) 50%,rgba(8,8,12,.85) 100%)}
 .hero-circuit{position:absolute;inset:0;z-index:0;opacity:.08}
 .hero-content{position:relative;z-index:2;max-width:680px}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);border-radius:50px;font-size:.8rem;font-weight:600;color:var(--cyan);margin-bottom:24px}
@@ -112,10 +115,15 @@ ul{list-style:none}
 /* ===== CATEGORIES ===== */
 .categories{padding:100px 0;position:relative;z-index:1}
 .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:20px}
-.cat-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.04);border-radius:var(--radius-lg);padding:32px 20px;text-align:center;transition:var(--transition);cursor:pointer}
+.cat-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.04);border-radius:var(--radius-lg);overflow:hidden;text-align:center;transition:var(--transition);cursor:pointer}
 .cat-card:hover{border-color:rgba(0,229,255,.2);background:var(--bg-card-hover);transform:translateY(-4px);box-shadow:var(--glow-sm)}
 .cat-card:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
-.cat-icon{width:56px;height:56px;margin:0 auto 16px;background:rgba(0,229,255,.06);border-radius:14px;display:flex;align-items:center;justify-content:center}
+.cat-img{width:100%;height:120px;position:relative;overflow:hidden}
+.cat-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.cat-card:hover .cat-img img{transform:scale(1.08)}
+.cat-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,12,0) 30%,rgba(8,8,12,.7) 100%)}
+.cat-content{padding:16px 20px 24px}
+.cat-icon{width:56px;height:56px;margin:-32px auto 12px;background:rgba(0,229,255,.12);border-radius:14px;display:flex;align-items:center;justify-content:center;position:relative;z-index:2;border:2px solid var(--bg-card);backdrop-filter:blur(8px)}
 .cat-icon i{width:28px;height:28px;color:var(--cyan)}
 .cat-card h3{font-size:1rem;margin-bottom:4px}
 .cat-card p{font-size:.8rem;color:var(--text-muted)}
@@ -126,6 +134,8 @@ ul{list-style:none}
 .product-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.04);border-radius:var(--radius-lg);overflow:hidden;transition:var(--transition);position:relative;perspective:1000px}
 .product-card:hover{border-color:rgba(0,229,255,.15);box-shadow:0 20px 40px rgba(0,0,0,.4)}
 .product-img{height:220px;background:var(--bg-surface);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.product-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.product-card:hover .product-img img{transform:scale(1.05)}
 .product-img i{width:64px;height:64px;color:var(--text-dim);opacity:.5}
 .product-badge{position:absolute;top:12px;left:12px;padding:4px 10px;border-radius:6px;font-size:.7rem;font-weight:700;text-transform:uppercase}
 .badge-new{background:var(--cyan);color:var(--bg)}
@@ -150,7 +160,8 @@ ul{list-style:none}
 .deal{padding:100px 0;position:relative;z-index:1}
 .deal-container{background:var(--bg-card);border:1px solid rgba(0,229,255,.1);border-radius:var(--radius-lg);padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;position:relative;overflow:hidden}
 .deal-container::before{content:'';position:absolute;top:-50%;right:-20%;width:400px;height:400px;background:radial-gradient(circle,rgba(0,229,255,.06) 0%,transparent 70%);pointer-events:none}
-.deal-visual{display:flex;align-items:center;justify-content:center;background:var(--bg-surface);border-radius:var(--radius);min-height:300px}
+.deal-visual{display:flex;align-items:center;justify-content:center;background:var(--bg-surface);border-radius:var(--radius);min-height:300px;overflow:hidden}
+.deal-visual img{width:100%;height:100%;object-fit:cover}
 .deal-visual i{width:120px;height:120px;color:var(--text-dim);opacity:.3}
 .deal-content h4{font-size:.85rem;color:var(--cyan);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
 .deal-content h2{font-size:1.75rem;margin-bottom:16px}
@@ -173,8 +184,10 @@ ul{list-style:none}
 /* ===== BRANDS ===== */
 .brands{padding:80px 0;position:relative;z-index:1}
 .brands-grid{display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap}
-.brand-badge{padding:20px 36px;background:var(--bg-card);border:1px solid rgba(255,255,255,.04);border-radius:var(--radius);font-family:var(--font-heading);font-size:1.1rem;font-weight:700;color:var(--text-dim);transition:var(--transition);letter-spacing:.03em}
+.brand-badge{padding:20px 36px;background:var(--bg-card);border:1px solid rgba(255,255,255,.04);border-radius:var(--radius);font-family:var(--font-heading);font-size:1.1rem;font-weight:700;color:var(--text-dim);transition:var(--transition);letter-spacing:.03em;position:relative;overflow:hidden}
 .brand-badge:hover{color:var(--cyan);border-color:rgba(0,229,255,.2);box-shadow:var(--glow-sm)}
+.brand-badge::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at center,rgba(0,229,255,.04) 0%,transparent 70%);opacity:0;transition:opacity .3s ease}
+.brand-badge:hover::before{opacity:1}
 
 /* ===== BLOG ===== */
 .blog{padding:100px 0;position:relative;z-index:1}
@@ -182,7 +195,9 @@ ul{list-style:none}
 .blog-card{background:var(--bg-card);border:1px solid rgba(255,255,255,.04);border-radius:var(--radius-lg);overflow:hidden;transition:var(--transition)}
 .blog-card:hover{border-color:rgba(0,229,255,.15);transform:translateY(-4px)}
 .blog-card:focus-within{outline:2px solid var(--cyan);outline-offset:3px}
-.blog-thumb{height:200px;background:var(--bg-surface);display:flex;align-items:center;justify-content:center}
+.blog-thumb{height:200px;background:var(--bg-surface);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.blog-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.blog-card:hover .blog-thumb img{transform:scale(1.05)}
 .blog-thumb i{width:48px;height:48px;color:var(--text-dim);opacity:.3}
 .blog-body{padding:24px}
 .blog-tag{font-size:.7rem;font-weight:700;text-transform:uppercase;color:var(--violet);letter-spacing:.05em;margin-bottom:8px}
@@ -217,7 +232,8 @@ ul{list-style:none}
 .review-stars i{width:18px;height:18px;color:var(--warning)}
 .review-text{font-size:.95rem;color:var(--text-muted);margin-bottom:20px;font-style:italic;line-height:1.7}
 .review-author{display:flex;align-items:center;gap:12px}
-.review-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--violet));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#fff}
+.review-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--violet));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#fff;overflow:hidden;flex-shrink:0}
+.review-avatar img{width:100%;height:100%;object-fit:cover}
 .review-info h4{font-size:.9rem;font-weight:600}
 .review-info p{font-size:.78rem;color:var(--text-muted)}
 .review-verified{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;color:var(--success);font-weight:600;margin-top:2px}
@@ -320,6 +336,7 @@ TechVault
 
 <!-- HERO -->
 <section class="hero" id="hero">
+<div class="hero-bg"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1600&q=80" alt="Placa de circuito eletronica em detalhe" loading="eager"></div>
 <svg class="hero-circuit" aria-hidden="true" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
 <defs>
 <pattern id="circuit" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
@@ -360,34 +377,52 @@ TechVault
 <p class="section-subtitle reveal">Navegue pelo nosso catalogo completo de tecnologia de ponta</p>
 <div class="cat-grid">
 <div class="cat-card reveal reveal-delay-1" tabindex="0" role="button" aria-label="Smartphones">
+<div class="cat-img"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop" alt="Smartphone moderno em destaque" loading="lazy"></div>
+<div class="cat-content">
 <div class="cat-icon"><i data-lucide="smartphone"></i></div>
 <h3>Smartphones</h3>
 <p>1.200+ modelos</p>
 </div>
+</div>
 <div class="cat-card reveal reveal-delay-1" tabindex="0" role="button" aria-label="Notebooks">
+<div class="cat-img"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop" alt="Notebook aberto sobre mesa" loading="lazy"></div>
+<div class="cat-content">
 <div class="cat-icon"><i data-lucide="laptop"></i></div>
 <h3>Notebooks</h3>
 <p>800+ modelos</p>
 </div>
+</div>
 <div class="cat-card reveal reveal-delay-2" tabindex="0" role="button" aria-label="Audio Premium">
+<div class="cat-img"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop" alt="Fones de ouvido premium" loading="lazy"></div>
+<div class="cat-content">
 <div class="cat-icon"><i data-lucide="headphones"></i></div>
 <h3>Audio Premium</h3>
 <p>500+ modelos</p>
 </div>
+</div>
 <div class="cat-card reveal reveal-delay-2" tabindex="0" role="button" aria-label="Gaming">
+<div class="cat-img"><img src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=400&h=300&fit=crop" alt="Setup gamer com iluminacao RGB" loading="lazy"></div>
+<div class="cat-content">
 <div class="cat-icon"><i data-lucide="gamepad-2"></i></div>
 <h3>Gaming</h3>
 <p>2.000+ itens</p>
 </div>
+</div>
 <div class="cat-card reveal reveal-delay-3" tabindex="0" role="button" aria-label="Smart Home">
+<div class="cat-img"><img src="https://images.unsplash.com/photo-1558002038-1055907df827?w=400&h=300&fit=crop" alt="Dispositivos de casa inteligente" loading="lazy"></div>
+<div class="cat-content">
 <div class="cat-icon"><i data-lucide="home"></i></div>
 <h3>Smart Home</h3>
 <p>600+ dispositivos</p>
 </div>
+</div>
 <div class="cat-card reveal reveal-delay-3" tabindex="0" role="button" aria-label="Wearables">
+<div class="cat-img"><img src="https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=300&fit=crop" alt="Relogio inteligente no pulso" loading="lazy"></div>
+<div class="cat-content">
 <div class="cat-icon"><i data-lucide="watch"></i></div>
 <h3>Wearables</h3>
 <p>400+ modelos</p>
+</div>
 </div>
 </div>
 </div>
@@ -408,7 +443,7 @@ TechVault
 <h2 class="section-title reveal">Oferta do <span>Dia</span></h2>
 <p class="section-subtitle reveal">Corra antes que acabe! Estoque limitado.</p>
 <div class="deal-container reveal">
-<div class="deal-visual"><i data-lucide="monitor"></i></div>
+<div class="deal-visual"><img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&h=400&fit=crop" alt="MacBook Pro sobre mesa com fundo escuro" loading="lazy"></div>
 <div class="deal-content">
 <h4>Oferta Relampago</h4>
 <h2>MacBook Pro M4 Max 36GB</h2>
@@ -460,7 +495,7 @@ TechVault
 <p class="section-subtitle reveal">Fique por dentro das novidades do mundo tech</p>
 <div class="blog-grid">
 <article class="blog-card reveal reveal-delay-1">
-<div class="blog-thumb"><i data-lucide="brain"></i></div>
+<div class="blog-thumb"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=250&fit=crop" alt="Inteligencia artificial e tecnologia" loading="lazy"></div>
 <div class="blog-body">
 <div class="blog-tag">Inteligencia Artificial</div>
 <h3><a href="#">IA em 2026: Como a Inteligencia Artificial Transformou o Mercado de Gadgets</a></h3>
@@ -472,7 +507,7 @@ TechVault
 </div>
 </article>
 <article class="blog-card reveal reveal-delay-2">
-<div class="blog-thumb"><i data-lucide="smartphone"></i></div>
+<div class="blog-thumb"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=250&fit=crop" alt="Smartphone em analise comparativa" loading="lazy"></div>
 <div class="blog-body">
 <div class="blog-tag">Review</div>
 <h3><a href="#">Galaxy S26 Ultra vs iPhone 17 Pro Max: Comparativo Definitivo</a></h3>
@@ -484,7 +519,7 @@ TechVault
 </div>
 </article>
 <article class="blog-card reveal reveal-delay-3">
-<div class="blog-thumb"><i data-lucide="book-open"></i></div>
+<div class="blog-thumb"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=250&fit=crop" alt="Notebook ideal para cada necessidade" loading="lazy"></div>
 <div class="blog-body">
 <div class="blog-tag">Guia de Compra</div>
 <h3><a href="#">Guia Completo: Como Escolher o Notebook Ideal para Cada Necessidade</a></h3>
@@ -579,7 +614,7 @@ TechVault
 <div class="review-stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
 <p class="review-text">"Comprei meu notebook gamer na TechVault e a experiencia foi impecavel. Entrega em 24h e preco melhor que todas as outras lojas. Super recomendo!"</p>
 <div class="review-author">
-<div class="review-avatar">RM</div>
+<div class="review-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=88&h=88&fit=crop&crop=face" alt="Foto de Rafael Mendes" loading="lazy"></div>
 <div class="review-info">
 <h4>Rafael Mendes</h4>
 <p>Sao Paulo, SP</p>
@@ -591,7 +626,7 @@ TechVault
 <div class="review-stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
 <p class="review-text">"A secao de Monte seu PC e fantastica! Consegui configurar exatamente o que precisava e o preco ficou muito justo. Atendimento de primeira."</p>
 <div class="review-author">
-<div class="review-avatar">CS</div>
+<div class="review-avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=88&h=88&fit=crop&crop=face" alt="Foto de Camila Santos" loading="lazy"></div>
 <div class="review-info">
 <h4>Camila Santos</h4>
 <p>Curitiba, PR</p>
@@ -603,7 +638,7 @@ TechVault
 <div class="review-stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
 <p class="review-text">"Melhor loja de tecnologia do Brasil. Comprei fones Bose e um Apple Watch, ambos chegaram rapido e com nota fiscal. Precos imbativeis."</p>
 <div class="review-author">
-<div class="review-avatar">LF</div>
+<div class="review-avatar"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=88&h=88&fit=crop&crop=face" alt="Foto de Lucas Ferreira" loading="lazy"></div>
 <div class="review-info">
 <h4>Lucas Ferreira</h4>
 <p>Rio de Janeiro, RJ</p>
@@ -737,14 +772,14 @@ initTiltEffect();
 
 /* ===== PRODUCTS DATA ===== */
 const productsData = [
-{id:'p1',name:'iPhone 16 Pro Max 256GB',brand:'Apple',price:9499,originalPrice:10999,icon:'smartphone',badge:'hot',badgeText:'Popular',specs:['A18 Pro','6.9"','48MP','Titanio'],installment:12},
-{id:'p2',name:'Galaxy S26 Ultra 512GB',brand:'Samsung',price:8999,originalPrice:null,icon:'smartphone',badge:'new',badgeText:'Novo',specs:['Snapdragon 8 Gen 4','6.8"','200MP','S Pen'],installment:12},
-{id:'p3',name:'Dell XPS 16 i7 32GB RTX 4060',brand:'Dell',price:12999,originalPrice:14999,icon:'laptop',badge:'sale',badgeText:'-13%',specs:['i7-14700H','32GB','RTX 4060','OLED'],installment:12},
-{id:'p4',name:'Sony WH-1000XM6',brand:'Sony',price:2299,originalPrice:2799,icon:'headphones',badge:'hot',badgeText:'Popular',specs:['ANC','LDAC','40h Bateria','Hi-Res'],installment:12},
-{id:'p5',name:'ROG Strix SCAR 18 RTX 4090',brand:'ASUS',price:24999,originalPrice:null,icon:'laptop',badge:'new',badgeText:'Novo',specs:['i9-14900HX','64GB','RTX 4090','240Hz'],installment:12},
-{id:'p6',name:'Apple Watch Ultra 3',brand:'Apple',price:6499,originalPrice:7299,icon:'watch',badge:'sale',badgeText:'-11%',specs:['GPS+Cell','Titanio','72h','mergulho'],installment:12},
-{id:'p7',name:'DJI Air 4 Fly More Combo',brand:'DJI',price:8999,originalPrice:null,icon:'camera',badge:'new',badgeText:'Novo',specs:['8K','Omnidirecional','46min','ActiveTrack 7'],installment:12},
-{id:'p8',name:'Bose QuietComfort Ultra Earbuds',brand:'Bose',price:2199,originalPrice:2699,icon:'headphones',badge:'sale',badgeText:'-19%',specs:['ANC','Spatial','6h+18h','IPX4'],installment:12}
+{id:'p1',name:'iPhone 16 Pro Max 256GB',brand:'Apple',price:9499,originalPrice:10999,icon:'smartphone',img:'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500&h=500&fit=crop',imgAlt:'iPhone 16 Pro Max em cor titanio',badge:'hot',badgeText:'Popular',specs:['A18 Pro','6.9"','48MP','Titanio'],installment:12},
+{id:'p2',name:'Galaxy S25 Ultra 512GB',brand:'Samsung',price:8999,originalPrice:null,icon:'smartphone',img:'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&h=500&fit=crop',imgAlt:'Galaxy S25 Ultra em destaque',badge:'new',badgeText:'Novo',specs:['Snapdragon 8 Gen 4','6.8"','200MP','S Pen'],installment:12},
+{id:'p3',name:'MacBook Air M4 15" 16GB',brand:'Apple',price:12999,originalPrice:14999,icon:'laptop',img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&h=500&fit=crop',imgAlt:'MacBook Air aberto sobre mesa',badge:'sale',badgeText:'-13%',specs:['Apple M4','16GB','512GB SSD','Liquid Retina'],installment:12},
+{id:'p4',name:'Sony WH-1000XM5',brand:'Sony',price:2299,originalPrice:2799,icon:'headphones',img:'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=500&h=500&fit=crop',imgAlt:'Fone Sony WH-1000XM5 preto',badge:'hot',badgeText:'Popular',specs:['ANC','LDAC','40h Bateria','Hi-Res'],installment:12},
+{id:'p5',name:'PS5 Pro 2TB Digital Edition',brand:'Sony',price:5499,originalPrice:null,icon:'gamepad-2',img:'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=500&h=500&fit=crop',imgAlt:'Console PlayStation 5 Pro',badge:'new',badgeText:'Novo',specs:['GPU Custom','2TB SSD','8K','Ray Tracing'],installment:12},
+{id:'p6',name:'Apple Watch Ultra 3',brand:'Apple',price:6499,originalPrice:7299,icon:'watch',img:'https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=500&h=500&fit=crop',imgAlt:'Apple Watch Ultra no pulso',badge:'sale',badgeText:'-11%',specs:['GPS+Cell','Titanio','72h','mergulho'],installment:12},
+{id:'p7',name:'NVIDIA RTX 4090 24GB',brand:'NVIDIA',price:12999,originalPrice:null,icon:'cpu',img:'https://images.unsplash.com/photo-1591488320449-011701bb6704?w=500&h=500&fit=crop',imgAlt:'Placa de video RTX 4090',badge:'new',badgeText:'Novo',specs:['24GB GDDR6X','Ada Lovelace','DLSS 3','PCIe 4.0'],installment:12},
+{id:'p8',name:'iPad Pro M4 12.9" 256GB',brand:'Apple',price:10499,originalPrice:11999,icon:'tablet',img:'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&h=500&fit=crop',imgAlt:'iPad Pro M4 com tela grande',badge:'sale',badgeText:'-12%',specs:['Apple M4','Liquid Retina XDR','Face ID','5G'],installment:12}
 ];
 
 /* ===== RENDER PRODUCTS ===== */
@@ -756,7 +791,7 @@ const badgeClass=p.badge==='new'?'badge-new':p.badge==='sale'?'badge-sale':'badg
 return`
 <div class="product-card reveal reveal-delay-${(i%4)+1}" data-product-id="${p.id}">
 <div class="product-img">
-<i data-lucide="${p.icon}"></i>
+${p.img?`<img src="${p.img}" alt="${p.imgAlt||p.name}" loading="lazy">`:`<i data-lucide="${p.icon}"></i>`}
 <span class="product-badge ${badgeClass}">${p.badgeText}</span>
 </div>
 <div class="product-info">
